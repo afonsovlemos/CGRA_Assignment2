@@ -1,0 +1,89 @@
+%%html
+<script id="cube">
+
+  class cube extends CGRAmod{
+    constructor(glcontext,colors){
+      super(glcontext);
+
+      this.numvertices = 36;
+      var x = 0.5;
+      var y = 0.5;
+      var z = 0.5;
+      this.colors = [];
+      this.vertices = [
+        // front
+        -x,-y,z,
+        x,-y, z,
+        x, y, z, // triangle 1 : end
+
+        x, y,z, // triangle 2 : begin
+        -x,y,z,
+        -x, -y,z, // triangle 2 : end
+
+        // top
+        -x,y, z,
+        x,y,z,
+        x,y,-z,
+
+        x, y,-z,
+        -x,y,-z,
+        -x,y,z,
+
+        // back
+        -x,y,-z,
+        x, y, -z,
+        x, -y,-z,
+
+        x,-y, -z,
+        -x,-y, -z,
+        -x,y,-z,
+
+        // bottom
+        -x, -y, -z,
+        x,-y, -z,
+        x,-y, z,
+
+        x, -y, z,
+        -x,-y,z,
+        -x, -y,-z,
+
+        // left
+        -x,-y,-z,
+        -x, -y, z,
+        -x,y, z,
+
+        -x, y, z,
+        -x, y,-z,
+        -x, -y,-z,
+
+        // right
+        x, -y, z,
+        x, -y,-z,
+        x, y, -z,
+
+        x, y, -z,
+        x, y, z,
+        x,-y, z];
+
+      for(var i = 0; i<this.numvertices;i++){
+        this.colors.push(colors[0]);
+        this.colors.push(colors[1]);
+        this.colors.push(colors[2]);
+      }
+
+
+      this.vertexbuffer=this.gl.createBuffer();
+      this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.vertexbuffer);
+
+      this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(this.vertices), this.gl.STATIC_DRAW);
+
+      this.colorbuffer = this.gl.createBuffer();
+      this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.colorbuffer);
+
+      this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(this.colors), this.gl.STATIC_DRAW);
+
+
+    }
+
+  }
+</script>

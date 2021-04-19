@@ -1,0 +1,97 @@
+%%html
+<script id="myapp">
+
+  class myapp extends DEECapp{
+    initialize(){
+
+      //TODO - Here is the declaration of a "watchdog"
+      window.addEventListener("keypress",this.keyprocess);
+
+    }
+
+    //TODO here is the the method triggered by the listener
+    keyprocess(evt){
+
+      console.log('Key pressed. Keycode:'+evt.keyCode + ' Char: \'' + String.fromCharCode(evt.charCode)+'\'');
+
+      if(evt.keyCode == 97){
+        if(myapp.animation == false){
+          myapp.animation = true;
+          myapp.time = Date.now();
+        }
+        else{
+          myapp.animation = false;
+
+        }
+      }else if(evt.keyCode == 115){
+        if(!myapp.div.localeCompare('NaN')){
+          myapp.div = 'swing';
+          myapp.camUpdate.setVecDir(glm.vec3(1,1,1));
+        }
+        else{
+          myapp.div = 'NaN';
+          var camPosition = myapp.camUpdate.getPosition();
+          var camLookingAt = myapp.camUpdate.getDirection();
+          camPosition = glm.vec3(camPosition[0],1.2,camPosition[2]);
+          camLookingAt = glm.vec3(camLookingAt[0],1.2,camLookingAt[2]);
+          myapp.camUpdate.setCamPosDir(camPosition,camLookingAt);
+        }
+      }else if(evt.keyCode == 109){
+        if(!myapp.div.localeCompare('NaN')){
+          myapp.div = 'mgr';
+
+          myapp.camUpdate.setVecDir(glm.vec3(1,0,1));
+        }
+        else{
+          myapp.div = 'NaN';
+          var camPosition = myapp.camUpdate.getPosition();
+          var camLookingAt = myapp.camUpdate.getDirection();
+          camPosition = glm.vec3(camPosition[0],1.2,camPosition[2]);
+          camLookingAt = glm.vec3(camLookingAt[0],1.2,camLookingAt[2]);
+          myapp.camUpdate.setCamPosDir(camPosition,camLookingAt);
+        }
+      }else if(evt.keyCode == 119){
+        if(!myapp.div.localeCompare('NaN')){
+          myapp.div = 'world';
+
+          myapp.camUpdate.setVecDir(glm.vec3(-1,0,0));
+        }
+        else{
+          myapp.div = 'NaN';
+          var camPosition = myapp.camUpdate.getPosition();
+          var camLookingAt = myapp.camUpdate.getDirection();
+          camPosition = glm.vec3(camPosition[0],1.2,camPosition[2]);
+          camLookingAt = glm.vec3(camLookingAt[0],1.2,camLookingAt[2]);
+          myapp.camUpdate.setCamPosDir(camPosition,camLookingAt);
+        }
+      }
+      else if(evt.keyCode == 27){
+        alert("You pressed the \"Escape\" key.");
+      }
+      else if(evt.keyCode == 102){
+        //alert("You pressed the \"f\" key.");
+        myapp.camUpdate.setPosition(1.0);
+      }
+      else if(evt.keyCode == 98){
+        //alert("You pressed the \"b\" key.");
+        myapp.camUpdate.setPosition(-1.0);
+      }
+      else if(evt.keyCode == 114){
+        //alert("You pressed the \"r\" key.");
+        myapp.camUpdate.setDirection(-5.0);
+      }
+      else if(evt.keyCode == 108){
+        //alert("You pressed the \"l\" key.");
+        myapp.camUpdate.setDirection(5.0);
+      }
+      else if(evt.keyCode == 112){
+        //alert("You pressed the \"p\" key.");
+        myapp.camUpdate.setCamPosDir(glm.vec3(-18.0,1.2,0.0),glm.vec3(1.0,1.0,1.0));
+      }
+
+
+    }
+
+  }
+
+</script>

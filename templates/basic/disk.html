@@ -1,0 +1,55 @@
+%%html
+<script id="disk">
+
+  class disk extends CGRAmod{
+    constructor(glcontext,colors){
+      super(glcontext); // initialize the parent class
+
+      this.numvertices = 120*3;
+      this.vertices = [];
+      var x_vertice = 0;
+      var y_vertice = 0;
+      var z_vertice = 0;
+      this.colors = [];
+
+      for (var i = 0; i< this.numvertices; i++){
+        x_vertice = 0.5*Math.cos(2*Math.PI/120*i);
+        y_vertice = 0.5*Math.sin(2*Math.PI/120*i);
+        z_vertice = 0;
+        this.vertices.push(x_vertice);
+        this.vertices.push(y_vertice);
+        this.vertices.push(z_vertice);
+        this.colors.push(colors[0]);
+        this.colors.push(colors[1]);
+        this.colors.push(colors[2]);
+        x_vertice = 0.5*Math.cos(2*Math.PI/120*(i+1));
+        y_vertice = 0.5*Math.sin(2*Math.PI/120*(i+1));
+        z_vertice = 0;
+        this.vertices.push(x_vertice);
+        this.vertices.push(y_vertice);
+        this.vertices.push(z_vertice);
+        this.colors.push(colors[0]);
+        this.colors.push(colors[1]);
+        this.colors.push(colors[2]);
+        this.vertices.push(0);
+        this.vertices.push(0);
+        this.vertices.push(0);
+        this.colors.push(colors[0]);
+        this.colors.push(colors[1]);
+        this.colors.push(colors[2]);
+
+      };
+
+
+      this.vertexbuffer=this.gl.createBuffer();
+      this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.vertexbuffer);
+      // as JS stores everything in 64 bit format and GL expects 32bits...
+      this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(this.vertices), this.gl.STATIC_DRAW);
+
+      this.colorbuffer = this.gl.createBuffer();
+      this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.colorbuffer);
+      // as JS stores everything in 64 bit format and GL expects 32bits...
+      this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(this.colors), this.gl.STATIC_DRAW);
+    }
+  }
+</script>

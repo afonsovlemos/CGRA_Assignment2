@@ -1,0 +1,69 @@
+%%html
+<script id="tree">
+
+  class tree extends CGRAmod{
+    constructor(glcontext,shader){
+      super(glcontext); // initialize the parent class
+
+      var color = glm.vec3(0/255,59/255,54/255);
+      this.leaves = new sphere(this.gl,color);
+      this.leaves.setShader(shader);
+
+      var colorBase = glm.vec3(255,255,255);
+      var colorSide = glm.vec3(99/255,55/255,44/255);
+      this.trunk = new cilinder(this.gl,colorBase,colorSide);
+      this.trunk.setShader(shader);
+
+    }
+
+    drawit(camUpdate, transform){
+
+      var camPosition = camUpdate.getPosition();
+      var camLookingAt = camUpdate.getDirection();
+
+      var scale = glm.mat4(glm.mat3(0.7,0,0, 0,7.0,0, 0,0,0.7));
+      var transl = glm.translate(glm.mat4(1.0),glm.vec3(-2.0,-0.5,-2.0));
+      var transformation = transl['*'](scale);
+
+      var viewMat =this.trunk.setViewMatrix(camPosition,camLookingAt);
+      var projMat = this.trunk.setProjMatrix();
+      this.trunk.setModelTransformation(transform['*'](transformation));
+
+      this.trunk.drawit(viewMat,projMat);
+
+      scale = glm.mat4(glm.mat3(1.5,0,0, 0,1.5,0, 0,0,1.5));
+      transl = glm.translate(glm.mat4(1.0),glm.vec3(-2.3,3.0,-2.3));
+      transformation = transl['*'](scale);
+
+      viewMat = this.leaves.setViewMatrix(camPosition,camLookingAt);
+      projMat = this.leaves.setProjMatrix();
+      this.leaves.setModelTransformation(transform['*'](transformation));
+
+      this.leaves.drawit(viewMat,projMat);
+
+
+      scale = glm.mat4(glm.mat3(1.5,0,0, 0,1.5,0, 0,0,1.5));
+      transl = glm.translate(glm.mat4(1.0),glm.vec3(-1.7,3.5,-1.7));
+      transformation = transl['*'](scale);
+
+      viewMat = this.leaves.setViewMatrix(camPosition,camLookingAt);
+      projMat = this.leaves.setProjMatrix();
+      this.leaves.setModelTransformation(transform['*'](transformation));
+
+      this.leaves.drawit(viewMat,projMat);
+
+
+      scale = glm.mat4(glm.mat3(1.5,0,0, 0,1.5,0, 0,0,1.5));
+      transl = glm.translate(glm.mat4(1.0),glm.vec3(-2.0,4.0,-2.0));
+      transformation = transl['*'](scale);
+
+      viewMat = this.leaves.setViewMatrix(camPosition,camLookingAt);
+      projMat = this.leaves.setProjMatrix();
+      this.leaves.setModelTransformation(transform['*'](transformation));
+
+      this.leaves.drawit(viewMat,projMat);
+
+    }
+
+  }
+</script>

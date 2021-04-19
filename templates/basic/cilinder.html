@@ -1,0 +1,151 @@
+%%html
+<script id="cilinder">
+
+  class cilinder extends CGRAmod{
+    constructor(glcontext,colorBase,colorSide){
+      super(glcontext); // initialize the parent class
+
+      var oneLayer = 100;
+      var LayerLength = 0.5;
+      this.numvertices = oneLayer*3*2*LayerLength*10 +2*oneLayer*3;
+      this.vertices = [];
+      this.colors = [];
+      var x_vertice = 0;
+      var y_vertice = 0;
+      var z_vertice = 0;
+
+      for (var i = 0; i< oneLayer; i++){
+        x_vertice = 0.5*Math.cos(2*Math.PI/oneLayer*i);
+        z_vertice = 0.5*Math.sin(2*Math.PI/oneLayer*i);
+        y_vertice = 0;
+        this.vertices.push(x_vertice);
+        this.vertices.push(y_vertice);
+        this.vertices.push(z_vertice);
+        this.colors.push(colorBase[0]);
+        this.colors.push(colorBase[1]);
+        this.colors.push(colorBase[2]);
+
+        x_vertice = 0.5*Math.cos(2*Math.PI/oneLayer*(i+1));
+        z_vertice = 0.5*Math.sin(2*Math.PI/oneLayer*(i+1));
+        y_vertice = 0;
+        this.vertices.push(x_vertice);
+        this.vertices.push(y_vertice);
+        this.vertices.push(z_vertice);
+        this.colors.push(colorBase[0]);
+        this.colors.push(colorBase[1]);
+        this.colors.push(colorBase[2]);
+
+        this.vertices.push(0);
+        this.vertices.push(0);
+        this.vertices.push(0);
+        this.colors.push(colorBase[0]);
+        this.colors.push(colorBase[1]);
+        this.colors.push(colorBase[2]);
+      };
+
+      for(var j = 0; j<LayerLength; j=j+0.1){
+        for (var i = 0; i< oneLayer; i++){
+          x_vertice = 0.5*Math.cos(2*Math.PI/oneLayer*i);
+          z_vertice = 0.5*Math.sin(2*Math.PI/oneLayer*i);
+          y_vertice = j;
+          this.vertices.push(x_vertice);
+          this.vertices.push(y_vertice);
+          this.vertices.push(z_vertice);
+          this.colors.push(colorSide[0]);
+          this.colors.push(colorSide[1]);
+          this.colors.push(colorSide[2]);
+          x_vertice = 0.5*Math.cos(2*Math.PI/oneLayer*(i+1));
+          z_vertice = 0.5*Math.sin(2*Math.PI/oneLayer*(i+1));
+          y_vertice = j;
+          this.vertices.push(x_vertice);
+          this.vertices.push(y_vertice);
+          this.vertices.push(z_vertice);
+          this.colors.push(colorSide[0]);
+          this.colors.push(colorSide[1]);
+          this.colors.push(colorSide[2]);
+          x_vertice = 0.5*Math.cos(2*Math.PI/oneLayer*(i));
+          z_vertice = 0.5*Math.sin(2*Math.PI/oneLayer*(i));
+          y_vertice = j+0.1;
+          this.vertices.push(x_vertice);
+          this.vertices.push(y_vertice);
+          this.vertices.push(z_vertice);
+          this.colors.push(colorSide[0]);
+          this.colors.push(colorSide[1]);
+          this.colors.push(colorSide[2]);
+
+          x_vertice = 0.5*Math.cos(2*Math.PI/oneLayer*(i+1));
+          z_vertice = 0.5*Math.sin(2*Math.PI/oneLayer*(i+1));
+          y_vertice = j;
+          this.vertices.push(x_vertice);
+          this.vertices.push(y_vertice);
+          this.vertices.push(z_vertice);
+          this.colors.push(colorSide[0]);
+          this.colors.push(colorSide[1]);
+          this.colors.push(colorSide[2]);
+          x_vertice = 0.5*Math.cos(2*Math.PI/oneLayer*(i+1));
+          z_vertice = 0.5*Math.sin(2*Math.PI/oneLayer*(i+1));
+          y_vertice = j+0.1;
+          this.vertices.push(x_vertice);
+          this.vertices.push(y_vertice);
+          this.vertices.push(z_vertice);
+          this.colors.push(colorSide[0]);
+          this.colors.push(colorSide[1]);
+          this.colors.push(colorSide[2]);
+          x_vertice = 0.5*Math.cos(2*Math.PI/oneLayer*(i));
+          z_vertice = 0.5*Math.sin(2*Math.PI/oneLayer*(i));
+          y_vertice = j+0.1;
+          this.vertices.push(x_vertice);
+          this.vertices.push(y_vertice);
+          this.vertices.push(z_vertice);
+          this.colors.push(colorSide[0]);
+          this.colors.push(colorSide[1]);
+          this.colors.push(colorSide[2]);
+
+
+        }
+      };
+
+
+      for (var i = 0; i< oneLayer; i++){
+        x_vertice = 0.5*Math.cos(2*Math.PI/oneLayer*i);
+        z_vertice = 0.5*Math.sin(2*Math.PI/oneLayer*i);
+        y_vertice = 0.5;
+        this.vertices.push(x_vertice);
+        this.vertices.push(y_vertice);
+        this.vertices.push(z_vertice);
+        this.colors.push(colorBase[0]);
+        this.colors.push(colorBase[1]);
+        this.colors.push(colorBase[2]);
+
+        x_vertice = 0.5*Math.cos(2*Math.PI/oneLayer*(i+1));
+        z_vertice = 0.5*Math.sin(2*Math.PI/oneLayer*(i+1));
+        y_vertice = 0.5;
+        this.vertices.push(x_vertice);
+        this.vertices.push(y_vertice);
+        this.vertices.push(z_vertice);
+        this.colors.push(colorBase[0]);
+        this.colors.push(colorBase[1]);
+        this.colors.push(colorBase[2]);
+
+        this.vertices.push(0);
+        this.vertices.push(0.5);
+        this.vertices.push(0);
+        this.colors.push(colorBase[0]);
+        this.colors.push(colorBase[1]);
+        this.colors.push(colorBase[2]);
+      };
+
+
+      this.vertexbuffer=this.gl.createBuffer();
+      this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.vertexbuffer);
+      // as JS stores everything in 64 bit format and GL expects 32bits...
+      this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(this.vertices), this.gl.STATIC_DRAW);
+
+      this.colorbuffer = this.gl.createBuffer();
+      this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.colorbuffer);
+      // as JS stores everything in 64 bit format and GL expects 32bits...
+      this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(this.colors), this.gl.STATIC_DRAW);
+    }
+
+  }
+</script>
