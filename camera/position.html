@@ -1,0 +1,62 @@
+%%html
+<script id="Position">
+
+  class Position{
+
+    theta = 0.0;
+    frontback = 0.0;
+
+    constructor(){
+      // ViewMat ProjMat
+      this.camPos=glm.vec3(0.0,1.2,-18.0);
+      this.camLookAt = glm.vec3(0.0,1.2,-10);
+      this.vecDirection = glm.vec3(this.camLookAt[0]-this.camPos[0], this.camLookAt[1]-this.camPos[1], this.camLookAt[2]-this.camPos[2]);
+    }
+
+    setPosition(frontback){
+      this.vecDirection = glm.vec3(this.camLookAt[0]-this.camPos[0], this.camLookAt[1]-this.camPos[1] , this.camLookAt[2]-this.camPos[2]);
+      var norm = Math.sqrt(Math.pow(this.vecDirection[0],2) +Math.pow(this.vecDirection[1],2) +Math.pow(this.vecDirection[2],2));
+      this.camPos = glm.vec3(this.camPos[0] + frontback*this.vecDirection[0]/norm, this.camPos[1] + frontback*this.vecDirection[1]/norm ,this.camPos[2] + frontback*this.vecDirection[2]/norm);
+      this.camLookAt = glm.vec3(this.camPos[0] + this.vecDirection[0],this.camPos[1] + this.vecDirection[1],this.camPos[2] + this.vecDirection[2]);
+      this.camPosDiv = glm.vec3(0,0,0);
+      this.camDirDeiv = glm.vec3(0,0,3);
+    }
+
+    setDirection(theta){
+
+      var rotation = glm.toMat4(glm.angleAxis(glm.radians(theta),glm.vec3(0.0,1.0,0.0)));
+      var transl = glm.translate(glm.mat4(1.0),this.camPos);
+      var camLAt = transl['*'](rotation['*'](glm.vec4(this.vecDirection[0],this.vecDirection[1],this.vecDirection[2],1)));
+      this.camLookAt =glm.vec3(camLAt[0],camLAt[1],camLAt[2]);
+      this.vecDirection = glm.vec3(this.camLookAt[0]-this.camPos[0], this.camLookAt[1]-this.camPos[1], this.camLookAt[2]-this.camPos[2]);
+    }
+
+    getVecDirection(){
+      return this.vecDirection;
+    }
+
+    getPosition(){
+      return this.camPos;
+    }
+
+    getDirection(){
+
+      return this.camLookAt;
+    }
+
+    setCamPosDir(camPos,camLookingAt){
+      this.camPos = camPos;
+      this.camLookAt = camLookingAt;
+      this.vecDirection = glm.vec3(this.camLookAt[0]-this.camPos[0], this.camLookAt[1]-this.camPos[1], this.camLookAt[2]-this.camPos[2]);
+    }
+
+    setVecDir(vecDir){
+      this.vecDirection = vecDir;
+      this.camLookAt = glm.vec3(this.vecDirection[0]+this.camPos[0], this.vecDirection[1]+this.camPos[1], this.vecDirection[2]+this.camPos[2]);
+    }
+
+
+    // ---------------------------------------
+
+  }
+</script>

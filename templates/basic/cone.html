@@ -1,0 +1,124 @@
+%%html
+<script id="cone">
+
+  class cone extends CGRAmod{
+    constructor(glcontext,colors){
+      super(glcontext); // initialize the parent class
+
+      var oneLayer = 1;
+      var LayerLength = 100;
+      this.numvertices = oneLayer*3*2*LayerLength/0.1 + 3*100;
+      this.vertices = [];
+      this.colors = [];
+      var x_vertice = 0;
+      var y_vertice = 0;
+      var z_vertice = 0;
+
+
+      for (var i = 0; i< LayerLength; i++){
+        x_vertice = 0.5*Math.cos(2*Math.PI/LayerLength*i);
+        z_vertice = 0.5*Math.sin(2*Math.PI/LayerLength*i);
+        y_vertice = 0;
+        this.vertices.push(x_vertice);
+        this.vertices.push(y_vertice);
+        this.vertices.push(z_vertice);
+        this.colors.push(colors[0]);
+        this.colors.push(colors[1]);
+        this.colors.push(colors[2]);
+        x_vertice = 0.5*Math.cos(2*Math.PI/LayerLength*(i+1));
+        z_vertice = 0.5*Math.sin(2*Math.PI/LayerLength*(i+1));
+        y_vertice = 0;
+        this.vertices.push(x_vertice);
+        this.vertices.push(y_vertice);
+        this.vertices.push(z_vertice);
+        this.colors.push(colors[0]);
+        this.colors.push(colors[1]);
+        this.colors.push(colors[2]);
+        this.vertices.push(0);
+        this.vertices.push(0);
+        this.vertices.push(0);
+        this.colors.push(colors[0]);
+        this.colors.push(colors[1]);
+        this.colors.push(colors[2]);
+      };
+
+
+      for(var j = 0; j<oneLayer; j=j+0.1){
+        if (-j+0.5 == 0){
+          break;
+        }
+        for (var i = 0; i< LayerLength; i++){
+          x_vertice = (-j+0.5)*Math.cos(2*Math.PI/LayerLength*i);
+          z_vertice = (-j+0.5)*Math.sin(2*Math.PI/LayerLength*i);
+          y_vertice = j;
+          this.vertices.push(x_vertice);
+          this.vertices.push(y_vertice);
+          this.vertices.push(z_vertice);
+          this.colors.push(colors[0]);
+          this.colors.push(colors[1]);
+          this.colors.push(colors[2]);
+          x_vertice = (-j+0.5)*Math.cos(2*Math.PI/LayerLength*(i+1));
+          z_vertice = (-j+0.5)*Math.sin(2*Math.PI/LayerLength*(i+1));
+          y_vertice = j;
+          this.vertices.push(x_vertice);
+          this.vertices.push(y_vertice);
+          this.vertices.push(z_vertice);
+          this.colors.push(colors[0]);
+          this.colors.push(colors[1]);
+          this.colors.push(colors[2]);
+          x_vertice = (-(j+0.1)+0.5)*Math.cos(2*Math.PI/LayerLength*(i));
+          z_vertice = (-(j+0.1)+0.5)*Math.sin(2*Math.PI/LayerLength*(i));
+          y_vertice = j+0.1;
+          this.vertices.push(x_vertice);
+          this.vertices.push(y_vertice);
+          this.vertices.push(z_vertice);
+          this.colors.push(colors[0]);
+          this.colors.push(colors[1]);
+          this.colors.push(colors[2]);
+
+          x_vertice = (-(j)+0.5)*Math.cos(2*Math.PI/LayerLength*(i+1));
+          z_vertice = (-(j)+0.5)*Math.sin(2*Math.PI/LayerLength*(i+1));
+          y_vertice = j;
+          this.vertices.push(x_vertice);
+          this.vertices.push(y_vertice);
+          this.vertices.push(z_vertice);
+          this.colors.push(colors[0]);
+          this.colors.push(colors[1]);
+          this.colors.push(colors[2]);
+          x_vertice = (-(j+0.1)+0.5)*Math.cos(2*Math.PI/LayerLength*(i+1));
+          z_vertice = (-(j+0.1)+0.5)*Math.sin(2*Math.PI/LayerLength*(i+1));
+          y_vertice = j+0.1;
+          this.vertices.push(x_vertice);
+          this.vertices.push(y_vertice);
+          this.vertices.push(z_vertice);
+          this.colors.push(colors[0]);
+          this.colors.push(colors[1]);
+          this.colors.push(colors[2]);
+          x_vertice = (-(j+0.1)+0.5)*Math.cos(2*Math.PI/LayerLength*(i));
+          z_vertice = (-(j+0.1)+0.5)*Math.sin(2*Math.PI/LayerLength*(i));
+          y_vertice = j+0.1;
+          this.vertices.push(x_vertice);
+          this.vertices.push(y_vertice);
+          this.vertices.push(z_vertice);
+          this.colors.push(colors[0]);
+          this.colors.push(colors[1]);
+          this.colors.push(colors[2]);
+
+
+        }
+      };
+
+      this.vertexbuffer=this.gl.createBuffer();
+      this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.vertexbuffer);
+      // as JS stores everything in 64 bit format and GL expects 32bits...
+      this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(this.vertices), this.gl.STATIC_DRAW);
+
+      this.colorbuffer = this.gl.createBuffer();
+      this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.colorbuffer);
+      // as JS stores everything in 64 bit format and GL expects 32bits...
+      this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(this.colors), this.gl.STATIC_DRAW);
+    }
+
+
+  }
+</script>

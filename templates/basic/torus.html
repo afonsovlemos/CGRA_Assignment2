@@ -1,0 +1,89 @@
+%%html
+<script id="torus">
+
+
+  class torus extends CGRAmod{
+    constructor(glcontext){
+      super(glcontext); // initialize the parent class
+      var color = glm.vec3(247/255,92/255,3/255);
+      var numLayers = 100;
+      this.numvertices = 100*100*3;
+      var oneLayer  =100;
+      this.vertices = [];
+      var x_vertices = 0;
+      var y_vertices = 0;
+      var z_vertices = 0;
+      this.colors = [];
+      var rotation = [];
+      var transl = [];
+      var transf = [];
+      var vert = glm.vec4(0,0,0,0);
+
+      for(var j=0; j <numLayers;j++){
+        for(var i = 0; i < oneLayer; i++){
+          x_vertices = 0.05*Math.cos(2*Math.PI/oneLayer*i);
+          z_vertices = 0.05*Math.sin(2*Math.PI/oneLayer*i);
+          y_vertices = 0;
+          vert = glm.vec4(x_vertices,y_vertices,z_vertices,1.0);
+          rotation = glm.toMat4(glm.angleAxis(glm.radians(360/numLayers*j),glm.vec3(0.0,0.0,1.0)));
+          rotation = glm.mat4(1.0)['*'](rotation);
+          transl = glm.translate(glm.mat4(1.0),glm.vec3(0.5*Math.cos(2*Math.PI/numLayers*j),0.5*Math.sin(2*Math.PI/numLayers*j),0.0));
+          transf = transl['*'](rotation);
+          vert = transf['*'](vert);
+          this.vertices.push(vert[0]);
+          this.vertices.push(vert[1]);
+          this.vertices.push(vert[2]);
+          this.colors.push(color[0]);
+          this.colors.push(color[1]);
+          this.colors.push(color[2]);
+          x_vertices = 0.05*Math.cos(2*Math.PI/oneLayer*(i+1));
+          z_vertices = 0.05*Math.sin(2*Math.PI/oneLayer*(i+1));
+          y_vertices = 0;
+          vert = glm.vec4(x_vertices,y_vertices,z_vertices,1.0);
+          rotation = glm.toMat4(glm.angleAxis(glm.radians(360/numLayers*j),glm.vec3(0.0,0.0,1.0)));
+          rotation = glm.mat4(1.0)['*'](rotation);
+          transl = glm.translate(glm.mat4(1.0),glm.vec3(0.5*Math.cos(2*Math.PI/numLayers*j),0.5*Math.sin(2*Math.PI/numLayers*j),0.0));
+          transf = transl['*'](rotation);
+          vert = transf['*'](vert);
+          this.vertices.push(vert[0]);
+          this.vertices.push(vert[1]);
+          this.vertices.push(vert[2]);
+          this.colors.push(color[0]);
+          this.colors.push(color[1]);
+          this.colors.push(color[2]);
+          x_vertices = 0.05*Math.cos(2*Math.PI/oneLayer*(i));
+          z_vertices = 0.05*Math.sin(2*Math.PI/oneLayer*(i));
+          y_vertices = 0;
+          vert = glm.vec4(x_vertices,y_vertices,z_vertices,1.0);
+          rotation = glm.toMat4(glm.angleAxis(glm.radians(360/numLayers*(j+1)),glm.vec3(0.0,0.0,1.0)));
+          rotation = glm.mat4(1.0)['*'](rotation);
+          transl = glm.translate(glm.mat4(1.0),glm.vec3(0.5*Math.cos(2*Math.PI/numLayers*(j+1)),0.5*Math.sin(2*Math.PI/numLayers*(j+1)),0.0));
+          transf = transl['*'](rotation);
+          vert = transf['*'](vert);
+          this.vertices.push(vert[0]);
+          this.vertices.push(vert[1]);
+          this.vertices.push(vert[2]);
+          this.colors.push(color[0]);
+          this.colors.push(color[1]);
+          this.colors.push(color[2]);
+
+        }
+      };
+
+      this.vertexbuffer=this.gl.createBuffer();
+      this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.vertexbuffer);
+      // as JS stores everything in 64 bit format and GL expects 32bits...
+      this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(this.vertices), this.gl.STATIC_DRAW);
+
+      this.colorbuffer = this.gl.createBuffer();
+      this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.colorbuffer);
+      // as JS stores everything in 64 bit format and GL expects 32bits...
+      this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(this.colors), this.gl.STATIC_DRAW);
+
+
+
+    }
+  }
+
+
+</script>
