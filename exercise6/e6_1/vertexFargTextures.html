@@ -1,0 +1,31 @@
+%%html
+<script id="my-vertex-shaderT" type="x-shader/x-vertex">
+precision mediump float;
+
+attribute  vec3 in_Position;
+attribute  vec3 in_Color;
+attribute vec2 in_texcoords;
+uniform mat4 MVP;
+
+varying  vec3 ex_Color;
+varying  vec2 vTextureCoord;
+
+void main() {
+
+    gl_Position = MVP * vec4(in_Position.x, in_Position.y, in_Position.z, 1.0);
+    vTextureCoord = in_texcoords;
+    ex_Color = in_Color;
+}
+</script>
+
+<script id="my-fragment-shaderT" type="x-shader/x-fragment">
+precision mediump float;
+varying  vec2 vTextureCoord;
+varying  vec3 ex_Color;
+
+uniform sampler2D uSampler;
+
+void main() {
+     gl_FragColor = texture2D(uSampler, vTextureCoord);
+}
+</script>

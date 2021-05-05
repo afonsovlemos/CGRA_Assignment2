@@ -1,0 +1,53 @@
+%%html
+<script id="my-vertex-shaderL" type="x-shader/x-vertex">
+precision mediump float;
+
+attribute  vec3 in_Position;
+attribute  vec3 in_Color;
+attribute  vec3 in_Normal;
+
+uniform mat4 MVP;
+uniform mat3 NormalMatrix;
+
+varying  vec4 ex_Color;
+varying  vec4 ex_Normal;
+
+void main() {
+    ex_Normal = normalize(NormalMatrix * in_Normal);
+
+    gl_Position = MVP * vec4(in_Position.x, in_Position.y, in_Position.z, 1.0);
+
+    ex_Color = vec4(in_Color,1.0);
+}
+</script>
+
+%%html
+<script id="my-fragment-shaderL" type="x-shader/x-fragment">
+precision mediump float;
+
+uniform vec3 Ambient;
+uniform vec3 LightColor;
+uniform vec3 LightDirection;
+uniform vec3 HalfVector;
+uniform float Shininess;
+uniform float Strength;
+
+varying  vec3 ex_Normal;
+varying  vec4 ex_Color;
+
+void main() {
+
+    float diffuse = max(0.0,dot(ex_Normal,LightDirection));
+    float specular = max(0.0,dot(ex_Normal,HalfVector));
+
+    if (diffuse == 0.0){
+        specular == 0.0;
+    }else{
+        specular = pow(specular,Shininess);
+    }
+    vec3 scatteredLight = Ambient + LigthColor*diffuse;
+    vec3 reflectedLight = LightColor*specular*Strength;
+    vec3 rgb = min(Color.rgd*scatteredLight+reflectedLight,vec3(1.0));
+    gl_FragColor = vec4(rgb,ex_Color.a);
+}
+</script>

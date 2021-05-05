@@ -1,0 +1,66 @@
+%%html
+<canvas id="myCanvas" width="1000" height="1000" style="border:2px solid #000000;">
+    Error: Your browser does not support the HTML canvas tag.
+</canvas>
+
+<script id="myapp">
+
+    class myapp extends DEECapp{
+        counter=0;
+        initialize(){
+
+            var fragsrc = document.getElementById("my-fragment-shader").text;
+            var vertsrc = document.getElementById("my-vertex-shader").text;
+
+            this.shaderprog = new DEECshader(this.gl);
+            this.shaderprog.srcShaders(vertsrc,fragsrc);
+
+            var fragsrcT = document.getElementById("my-fragment-shaderT").text;
+            var vertsrcT = document.getElementById("my-vertex-shaderT").text;
+
+            this.shaderprogT = new DEECshader(this.gl);
+            this.shaderprogT.srcShaders(vertsrcT,fragsrcT);
+
+            var vertsrcC = document.getElementById("my-vertex-shaderC").text;
+
+            this.shaderprogC = new DEECshader(this.gl);
+            this.shaderprogC.srcShaders(vertsrcC,fragsrc);
+
+            // perform other initializations
+            this.gl.enable(this.gl.DEPTH_TEST);
+            this.gl.clearColor(0.30,0.30,0.30,1.0);
+
+            // Projection and view matrices
+            this.projM = glm.perspective(glm.radians(45),1,1,100);
+
+            this.viewM = glm.lookAt(glm.vec3(0,0,0),glm.vec3(0,0,-1),glm.vec3(0,1,0));
+
+            // Lets create a square
+
+
+            this.mysquare = new square(this.gl);
+            this.mysquare.setShader(this.shaderprog);
+
+
+        }
+
+        render(){
+            this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
+
+            this.counter++;
+
+            var transl = glm.translate(glm.mat4(1.0),glm.vec3(0.0,0.0,-10.0));
+            var z = 5 + Math.sin(glm.radians(this.counter));
+            var transl2 = glm.translate(glm.mat4(1.0),glm.vec3(0.0,0.0,z));
+            var rotation = glm.rotate(glm.mat4(1.0),glm.radians(-this.counter),glm.vec3(1.0,0.0,0.0));
+            var transformation = transl['*'](rotation);
+            this.mycube1.setModelTransformation(transformation);
+            this.mycube1.drawit(this.viewM,this.projM);
+        }
+    }
+
+    var app = new myapp('myCanvas');
+
+    app.run();
+
+</script>
